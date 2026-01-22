@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jiu Jitsu | Técnicas, Filosofía y Recursos</title>
+  <style>
+    :root {
+      --color-bg: #0b0f17;
+      --color-surface: #121826;
+      --color-card: #182033;
+      --color-text: #f5f7ff;
+      --color-muted: #c3c9d9;
+      --color-accent: #2f6df6;
+      --color-accent-soft: rgba(47, 109, 246, 0.2);
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      border-radius: 16px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1200px, 90%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(11, 15, 23, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2f6df6, #0b1a3d);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      color: var(--color-muted);
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--color-text);
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      width: 24px;
+      height: 2px;
+      background: var(--color-text);
+      display: block;
+    }
+
+    .hero {
+      padding: 80px 0 100px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      color: var(--color-muted);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: var(--color-accent);
+      box-shadow: 0 12px 24px rgba(47, 109, 246, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      background: transparent;
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      color: var(--color-muted);
+      max-width: 720px;
+    }
+
+    .techniques-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--color-card);
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: var(--color-muted);
+      flex: 1;
+    }
+
+    .card .btn {
+      align-self: flex-start;
+      margin-top: 8px;
+    }
+
+    .philosophy {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      align-items: start;
+    }
+
+    .philosophy ul {
+      list-style: none;
+      display: grid;
+      gap: 16px;
+      color: var(--color-muted);
+    }
+
+    .philosophy li {
+      background: var(--color-surface);
+      padding: 16px 20px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .resources-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .resource-card {
+      background: var(--color-surface);
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: border 0.3s ease, transform 0.3s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--color-accent);
+    }
+
+    .resource-card span {
+      font-size: 0.85rem;
+      color: var(--color-muted);
+      display: block;
+      margin-top: 8px;
+    }
+
+    .details-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .detail-card {
+      background: var(--color-card);
+      padding: 22px;
+      border-radius: 16px;
+      border-left: 3px solid var(--color-accent);
+    }
+
+    footer {
+      background: var(--color-surface);
+      padding: 40px 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      color: var(--color-muted);
+    }
+
+    .footer-grid a {
+      color: var(--color-text);
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .nav-links {
+        position: absolute;
+        right: 5%;
+        top: 72px;
+        background: var(--color-surface);
+        flex-direction: column;
+        padding: 20px;
+        gap: 16px;
+        border-radius: 16px;
+        display: none;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <div class="logo-mark">JJ</div>
+        <span>Jiu Jitsu Elite</span>
+      </div>
+      <nav>
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#tecnicas">Técnicas</a></li>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#recursos">Recursos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container" id="inicio">
+      <div class="hero-text fade-in">
+        <h1>Descubre el arte del Jiu Jitsu, técnicas, filosofía y entrenamiento.</h1>
+        <p>
+          Entrena con propósito. Aprende desde los fundamentos hasta las tácticas más avanzadas
+          con una visión integral que une cuerpo, mente y estrategia.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tecnicas">Explorar técnicas</a>
+          <a class="btn btn-outline" href="#recursos">Ver recursos</a>
+        </div>
+      </div>
+      <div class="fade-in">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80" alt="Practicantes de Jiu Jitsu entrenando" />
+      </div>
+    </section>
+
+    <section class="container" id="tecnicas">
+      <div class="fade-in">
+        <h2 class="section-title">Técnicas esenciales y avanzadas</h2>
+        <p class="section-subtitle">
+          Una selección organizada para guiar tu progreso: proyecciones dinámicas, luxaciones precisas,
+          inmovilizaciones efectivas y defensa personal adaptable.
+        </p>
+      </div>
+      <div class="techniques-grid">
+        <article class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1549576490-b0b4831ef60a?auto=format&fit=crop&w=600&q=80" alt="Proyección en entrenamiento" />
+          <h3>Proyecciones</h3>
+          <p>Controla el equilibrio del oponente con entradas rápidas y cambios de nivel.</p>
+          <a class="btn btn-outline" href="#tecnica-proyecciones">Ver más</a>
+        </article>
+        <article class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?auto=format&fit=crop&w=600&q=80" alt="Luxación de brazo" />
+          <h3>Luxaciones</h3>
+          <p>Finalizaciones técnicas que requieren precisión, control y lectura del espacio.</p>
+          <a class="btn btn-outline" href="#tecnica-luxaciones">Ver más</a>
+        </article>
+        <article class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?auto=format&fit=crop&w=600&q=80" alt="Inmovilización en suelo" />
+          <h3>Inmovilizaciones</h3>
+          <p>Domina transiciones para mantener el control y limitar las opciones del rival.</p>
+          <a class="btn btn-outline" href="#tecnica-inmovilizaciones">Ver más</a>
+        </article>
+        <article class="card fade-in">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=600&q=80" alt="Técnica de defensa personal" />
+          <h3>Defensa personal</h3>
+          <p>Respuestas rápidas ante situaciones reales, con foco en seguridad y movilidad.</p>
+          <a class="btn btn-outline" href="#tecnica-defensa">Ver más</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="historia">
+      <div class="philosophy">
+        <div class="fade-in">
+          <h2 class="section-title">Ideas y filosofía</h2>
+          <p class="section-subtitle">
+            El Jiu Jitsu es más que combate: es disciplina, respeto y autocontrol.
+            Cada sesión enseña paciencia, humildad y estrategia.
+          </p>
+          <p class="section-subtitle" style="margin-top: 16px;">
+            En el tatami aprendemos a escuchar el cuerpo, gestionar la respiración y
+            transformar los errores en mejoras continuas.
+          </p>
+        </div>
+        <div class="fade-in">
+          <h3>Consejos para principiantes</h3>
+          <ul>
+            <li>Prioriza la técnica sobre la fuerza: la precisión te hará más eficiente.</li>
+            <li>Entrena la movilidad: una base flexible evita lesiones y mejora tus escapes.</li>
+            <li>Observa y pregunta: cada detalle cuenta en la transición de una posición.</li>
+            <li>Respira con intención: calma y claridad en cada combate.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" id="detalles">
+      <div class="fade-in">
+        <h2 class="section-title">Detalles de técnicas</h2>
+        <p class="section-subtitle">
+          Accede a explicaciones específicas para profundizar en cada familia de técnicas.
+        </p>
+      </div>
+      <div class="details-grid">
+        <article class="detail-card fade-in" id="tecnica-proyecciones">
+          <h3>Proyecciones</h3>
+          <p>
+            Trabaja entradas con control del agarre y usa el peso del rival a tu favor.
+            Practica combinaciones de pierna y cadera para un derribo eficiente.
+          </p>
+        </article>
+        <article class="detail-card fade-in" id="tecnica-luxaciones">
+          <h3>Luxaciones</h3>
+          <p>
+            Mantén los codos cerrados y crea ángulos antes de aplicar la finalización.
+            La paciencia y el control del agarre son clave para evitar escapes.
+          </p>
+        </article>
+        <article class="detail-card fade-in" id="tecnica-inmovilizaciones">
+          <h3>Inmovilizaciones</h3>
+          <p>
+            Enfatiza la distribución del peso y la presión constante.
+            Las transiciones suaves mantienen la ventaja sin perder estabilidad.
+          </p>
+        </article>
+        <article class="detail-card fade-in" id="tecnica-defensa">
+          <h3>Defensa personal</h3>
+          <p>
+            Prioriza la distancia, controla las muñecas y busca salidas seguras.
+            Practica respuestas simples y repetibles para situaciones de estrés.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="recursos">
+      <div class="fade-in">
+        <h2 class="section-title">Biblioteca de recursos</h2>
+        <p class="section-subtitle">
+          Enlaces seleccionados para profundizar en federaciones, academias, libros y contenido audiovisual.
+        </p>
+      </div>
+      <div class="resources-grid">
+        <a class="resource-card fade-in" href="https://ibjjf.com" target="_blank" rel="noopener">
+          Federación Internacional IBJJF
+          <span>Reglamento, eventos y rankings.</span>
+        </a>
+        <a class="resource-card fade-in" href="https://www.gracieuniversity.com" target="_blank" rel="noopener">
+          Gracie University
+          <span>Cursos estructurados y metodología.</span>
+        </a>
+        <a class="resource-card fade-in" href="https://www.bjjfanatics.com" target="_blank" rel="noopener">
+          BJJ Fanatics
+          <span>Biblioteca de videos y seminarios.</span>
+        </a>
+        <a class="resource-card fade-in" href="https://www.goodreads.com/shelf/show/brazilian-jiu-jitsu" target="_blank" rel="noopener">
+          Libros recomendados
+          <span>Lecturas técnicas y filosóficas.</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contacto">
+    <div class="container footer-grid">
+      <div>
+        <h3>Contacto</h3>
+        <p>Academia Jiu Jitsu Elite</p>
+        <p>Av. Dojo 123, Ciudad Tatami</p>
+        <p>+34 600 123 456</p>
+        <p>contacto@jiujitsuelite.com</p>
+      </div>
+      <div>
+        <h3>Redes sociales</h3>
+        <p><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></p>
+        <p><a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a></p>
+        <p><a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a></p>
+      </div>
+      <div>
+        <h3>Derechos</h3>
+        <p>© 2024 Jiu Jitsu Elite. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navLinks = document.getElementById("navLinks");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("active");
+      menuToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll(".fade-in").forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
+</body>
+</html>
